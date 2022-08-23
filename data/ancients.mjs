@@ -1,4 +1,4 @@
-import Ancients from '../assets/Ancients/index'
+import Ancients from '../assets/Ancients/index.mjs'
 
 const ancientsData = [
   {
