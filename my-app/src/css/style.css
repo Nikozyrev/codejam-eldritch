@@ -1,4 +1,10 @@
 
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+
 .ancients_container {
     /* width: 30%; */
 }
@@ -9,4 +15,18 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.deck {
+    width: 200px;
+    height: 300px;
+    background-size: 200px 300px;
+    background-image: url(../assets/mythicCardBackground.png);
+}
+
+.current_card {
+    width: 200px;
+    height: 300px;
+    background-size: 200px 300px;
+    margin-top: 30px;
 }

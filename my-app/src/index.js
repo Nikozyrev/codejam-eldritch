@@ -4,11 +4,10 @@ import { blueCards } from './data/mythicCards/index.mjs';
 import { brownCards } from './data/mythicCards/index.mjs';
 import { greenCards } from './data/mythicCards/index.mjs';
 
-
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
@@ -51,33 +50,69 @@ const chosenCardsAll = {
     blueCards: getRandomCards(totalCardsNeeded.blueCards, blueCards),
     brownCards: getRandomCards(totalCardsNeeded.brownCards, brownCards),
     greenCards: getRandomCards(totalCardsNeeded.greenCards, greenCards),
-}
-
+};
 
 const firstStageCards = shuffle([
-    ...getRandomCards(chosenAncient.firstStage.blueCards, chosenCardsAll.blueCards),
-    ...getRandomCards(chosenAncient.firstStage.brownCards, chosenCardsAll.brownCards),
-    ...getRandomCards(chosenAncient.firstStage.greenCards, chosenCardsAll.greenCards)
+    ...getRandomCards(
+        chosenAncient.firstStage.blueCards,
+        chosenCardsAll.blueCards
+    ),
+    ...getRandomCards(
+        chosenAncient.firstStage.brownCards,
+        chosenCardsAll.brownCards
+    ),
+    ...getRandomCards(
+        chosenAncient.firstStage.greenCards,
+        chosenCardsAll.greenCards
+    ),
 ]);
 
 const secondStageCards = shuffle([
-    ...getRandomCards(chosenAncient.secondStage.blueCards, chosenCardsAll.blueCards),
-    ...getRandomCards(chosenAncient.secondStage.brownCards, chosenCardsAll.brownCards),
-    ...getRandomCards(chosenAncient.secondStage.greenCards, chosenCardsAll.greenCards)
+    ...getRandomCards(
+        chosenAncient.secondStage.blueCards,
+        chosenCardsAll.blueCards
+    ),
+    ...getRandomCards(
+        chosenAncient.secondStage.brownCards,
+        chosenCardsAll.brownCards
+    ),
+    ...getRandomCards(
+        chosenAncient.secondStage.greenCards,
+        chosenCardsAll.greenCards
+    ),
 ]);
 
 const thirdStageCards = shuffle([
-    ...getRandomCards(chosenAncient.thirdStage.blueCards, chosenCardsAll.blueCards),
-    ...getRandomCards(chosenAncient.thirdStage.brownCards, chosenCardsAll.brownCards),
-    ...getRandomCards(chosenAncient.thirdStage.greenCards, chosenCardsAll.greenCards)
+    ...getRandomCards(
+        chosenAncient.thirdStage.blueCards,
+        chosenCardsAll.blueCards
+    ),
+    ...getRandomCards(
+        chosenAncient.thirdStage.brownCards,
+        chosenCardsAll.brownCards
+    ),
+    ...getRandomCards(
+        chosenAncient.thirdStage.greenCards,
+        chosenCardsAll.greenCards
+    ),
 ]);
 
-const finalDeck = [...firstStageCards,...secondStageCards,...thirdStageCards];
+const finalDeck = [...firstStageCards, ...secondStageCards, ...thirdStageCards];
 
 console.log(finalDeck);
-
-
 
 // Layout
 const cthulthu = document.getElementById('Cthulthu');
 cthulthu.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
+
+const deckDiv = document.querySelector('.deck');
+
+function drawCard(deck) {
+    const currentCardDiv = document.querySelector('.current_card');
+    const currentCard = deck.shift();
+    currentCard
+        ? (currentCardDiv.style.backgroundImage = `url(${currentCard.cardFace})`)
+        : (deckDiv.style.backgroundImage = 'none');
+}
+
+deckDiv.onclick = () => drawCard(finalDeck);
