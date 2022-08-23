@@ -1,20 +1,53 @@
 
 .wrapper {
+    min-height: 100vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    background-image: url(../assets/home.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 30px 5%;
 }
 
 
 .ancients_container {
-    /* width: 30%; */
+    max-width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .ancient_card {
     width: 300px;
     height: 400px;
+    border-radius: 25px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+#azathoth {
+    background-image: url(../assets/Ancients/Azathoth.png);
+}
+
+#cthulhu {
+    background-image: url(../assets/Ancients/Cthulthu.png);
+}
+
+#iogSothoth {
+    background-image: url(../assets/Ancients/IogSothoth.png);
+}
+
+#shubNiggurath {
+    background-image: url(../assets/Ancients/ShubNiggurath.png);
+}
+
+/* ---------- */
+
+.card {
+    border-radius: 25px;
+    border: solid 3px rgba(43, 34, 34, 0.533);
 }
 
 .deck {

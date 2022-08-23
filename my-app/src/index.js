@@ -101,10 +101,7 @@ const finalDeck = [...firstStageCards, ...secondStageCards, ...thirdStageCards];
 
 console.log(finalDeck);
 
-// Layout
-const cthulthu = document.getElementById('Cthulthu');
-cthulthu.style.backgroundImage = `url(${ancientsData[0].cardFace})`;
-
+// UX
 const deckDiv = document.querySelector('.deck');
 
 function drawCard(deck) {
