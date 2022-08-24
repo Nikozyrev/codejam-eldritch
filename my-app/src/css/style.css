@@ -7,24 +7,33 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 30px 5%;
+    padding: 30px 3%;
 }
 
 
 .ancients_container {
-    max-width: 60%;
+    max-width: 50%;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
 .ancient_card {
-    width: 300px;
-    height: 400px;
+    width: 270px;
+    height: 350px;
     border-radius: 25px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
+}
+
+.ancient_card._active {
+    border: solid 2px red;
+}
+
+.ancient_card:hover {
+    /* transform: scale(1.5); */
 }
 
 #azathoth {
@@ -45,21 +54,28 @@
 
 /* ---------- */
 
+._button {
+    width: 100px;
+    height: 50px;
+    background-color: purple;
+    border-radius: 15px;
+    border: solid 1px red;
+    color: white;
+}
+
 .card {
+    width: 200px;
+    height: 300px;
+    background-size: 200px 300px;
     border-radius: 25px;
     border: solid 3px rgba(43, 34, 34, 0.533);
 }
 
 .deck {
-    width: 200px;
-    height: 300px;
-    background-size: 200px 300px;
     background-image: url(../assets/mythicCardBackground.png);
+    cursor: pointer;
 }
 
 .current_card {
-    width: 200px;
-    height: 300px;
-    background-size: 200px 300px;
     margin-top: 30px;
 }
