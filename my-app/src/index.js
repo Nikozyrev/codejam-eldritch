@@ -6,6 +6,8 @@ import {
     greenCards,
 } from './data/mythicCards/index.mjs';
 
+const allCards = [...blueCards, ...brownCards, ...greenCards];
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -56,8 +58,10 @@ let chosenDifficulty;
 
 function chooseDifficulty(e) {
     e.target.classList.contains('difficulty')
-        ? ((chosenDifficulty = difficulties.find((el) => el.id === e.target.id)),
-        highlightChosenDifficulty(e))
+        ? ((chosenDifficulty = difficulties.find(
+              (el) => el.id === e.target.id
+          )),
+          highlightChosenDifficulty(e))
         : false;
 }
 
@@ -68,7 +72,8 @@ function highlightChosenDifficulty(e) {
     e.target.classList.add('_active');
 }
 
-document.querySelector('.difficulty-container').onclick = (e) => chooseDifficulty(e);
+document.querySelector('.difficulty-container').onclick = (e) =>
+    chooseDifficulty(e);
 
 // Create Deck
 
@@ -76,23 +81,29 @@ function createDeck() {
     const blueCardsCopy = [...blueCards];
     const brownCardsCopy = [...brownCards];
     const greenCardsCopy = [...greenCards];
-    const totalCardsNeeded = {
-        blueCards:
-            chosenAncient.firstStage.blueCards +
-            chosenAncient.secondStage.blueCards +
-            chosenAncient.thirdStage.blueCards,
-        brownCards:
-            chosenAncient.firstStage.brownCards +
-            chosenAncient.secondStage.brownCards +
-            chosenAncient.thirdStage.brownCards,
-        greenCards:
-            chosenAncient.firstStage.greenCards +
-            chosenAncient.secondStage.greenCards +
-            chosenAncient.thirdStage.greenCards,
-    };
+
+    const allCardsCopy = [...allCards];
+    
+    const totalCardsNeeded = Object.values(chosenAncient).reduce(
+        (acc, el) => {
+            return {
+                blueCards: acc.blueCards + (el.blueCards ? el.blueCards : 0),
+                brownCards: acc.brownCards + (el.brownCards ? el.brownCards : 0),
+                greenCards: acc.greenCards + (el.greenCards ? el.greenCards : 0),
+            };
+        },
+        {
+            blueCards: 0,
+            brownCards: 0,
+            greenCards: 0,
+        }
+    );
 
     const chosenCardsAll = {
-        blueCards: getRandomCards(totalCardsNeeded.blueCards, blueCardsCopy),
+        blueCards: getRandomCards(
+            totalCardsNeeded.blueCards,
+            allCardsCopy.filter((el) => el.color === 'blue')
+        ),
         brownCards: getRandomCards(totalCardsNeeded.brownCards, brownCardsCopy),
         greenCards: getRandomCards(totalCardsNeeded.greenCards, greenCardsCopy),
     };
@@ -169,9 +180,7 @@ function drawCard() {
     const currentCardDiv = document.querySelector('.current_card');
     const currentCard = deck.shift();
     updateStatus();
-    deck.length === 0 
-        ? (deckDiv.style.backgroundImage = 'none')  
-        : false;
+    deck.length === 0 ? (deckDiv.style.backgroundImage = 'none') : false;
     currentCard
         ? (currentCardDiv.style.backgroundImage = `url(${currentCard.cardFace})`)
         : false;
