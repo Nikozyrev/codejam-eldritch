@@ -1,6 +1,10 @@
 import difficulties from './data/difficulties.mjs';
 import ancientsData from './data/ancients.mjs';
-import { blueCards, brownCards, greenCards } from './data/mythicCards/index.mjs';
+import {
+    blueCards,
+    brownCards,
+    greenCards,
+} from './data/mythicCards/index.mjs';
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -65,7 +69,7 @@ function createDeck() {
         greenCards:
             chosenAncient.firstStage.greenCards +
             chosenAncient.secondStage.greenCards +
-            chosenAncient.thirdStage.greenCards, 
+            chosenAncient.thirdStage.greenCards,
     };
 
     const chosenCardsAll = {
@@ -88,6 +92,7 @@ function createDeck() {
             chosenCardsAll.greenCards
         ),
     ]);
+    firstStageCards.forEach((el) => (el.stage = 1));
 
     const secondStageCards = shuffle([
         ...getRandomCards(
@@ -103,6 +108,7 @@ function createDeck() {
             chosenCardsAll.greenCards
         ),
     ]);
+    secondStageCards.forEach((el) => (el.stage = 2));
 
     const thirdStageCards = shuffle([
         ...getRandomCards(
@@ -118,6 +124,7 @@ function createDeck() {
             chosenCardsAll.greenCards
         ),
     ]);
+    thirdStageCards.forEach((el) => (el.stage = 3));
 
     const finalDeck = [
         ...firstStageCards,
@@ -133,17 +140,69 @@ let deck;
 document.getElementById('create_deck_btn').onclick = () => {
     deck = createDeck();
     console.log(deck);
+    updateStatus();
 };
 
-// UX
+// Draw card
 const deckDiv = document.querySelector('.deck');
 
-function drawCard(deck) {
+function drawCard() {
     const currentCardDiv = document.querySelector('.current_card');
     const currentCard = deck.shift();
+    updateStatus();
+    deck.length === 0 
+        ? (deckDiv.style.backgroundImage = 'none')  
+        : false;
     currentCard
         ? (currentCardDiv.style.backgroundImage = `url(${currentCard.cardFace})`)
-        : (deckDiv.style.backgroundImage = 'none');
+        : false;
 }
 
-deckDiv.onclick = () => drawCard(deck);
+deckDiv.onclick = drawCard;
+
+// Update status
+function updateStatus() {
+    const firstStageCount = {
+        blueCards: deck.filter((el) => el.color === 'blue' && el.stage === 1)
+            .length,
+        brownCards: deck.filter((el) => el.color === 'brown' && el.stage === 1)
+            .length,
+        greenCards: deck.filter((el) => el.color === 'green' && el.stage === 1)
+            .length,
+    };
+    const secondStageCount = {
+        blueCards: deck.filter((el) => el.color === 'blue' && el.stage === 2)
+            .length,
+        brownCards: deck.filter((el) => el.color === 'brown' && el.stage === 2)
+            .length,
+        greenCards: deck.filter((el) => el.color === 'green' && el.stage === 2)
+            .length,
+    };
+    const thirdStageCount = {
+        blueCards: deck.filter((el) => el.color === 'blue' && el.stage === 3)
+            .length,
+        brownCards: deck.filter((el) => el.color === 'brown' && el.stage === 3)
+            .length,
+        greenCards: deck.filter((el) => el.color === 'green' && el.stage === 3)
+            .length,
+    };
+
+    const totalCount = [firstStageCount, secondStageCount, thirdStageCount];
+
+    // const stages = document.getElementsByClassName('dots-container');
+
+    const greenDots = document.getElementsByClassName('green');
+    for (let i = 0; i < greenDots.length; i++) {
+        greenDots[i].textContent = totalCount[i].greenCards;
+    }
+
+    const brownDots = document.getElementsByClassName('brown');
+    for (let i = 0; i < brownDots.length; i++) {
+        brownDots[i].textContent = totalCount[i].brownCards;
+    }
+
+    const blueDots = document.getElementsByClassName('blue');
+    for (let i = 0; i < blueDots.length; i++) {
+        blueDots[i].textContent = totalCount[i].blueCards;
+    }
+}
