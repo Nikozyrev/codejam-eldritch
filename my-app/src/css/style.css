@@ -11,6 +11,7 @@
     color: white;
 }
 
+/* ---Ancients--- */
 
 .ancients_container {
     max-width: 50%;
@@ -52,13 +53,25 @@
 #shubNiggurath {
     background-image: url(../assets/Ancients/ShubNiggurath.png);
 }
+/* ------Difficulty------ */
 
-/* ---------- */
+.difficulty {
+    margin-top: 15px;
+}
+
+.difficulty._active {
+    background-color: red;
+}
+
+/* -------Deck------- */
 
 ._button {
-    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
     height: 50px;
-    background-color: purple;
+    background-color: rgba(128, 0, 128, 0.558);
     border-radius: 15px;
     border: solid 1px red;
     color: white;

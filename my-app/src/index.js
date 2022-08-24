@@ -51,6 +51,25 @@ function highlightChosenAncient(e) {
 
 document.querySelector('.ancients_container').onclick = (e) => chooseAncient(e);
 
+// Choose Difficulty
+let chosenDifficulty;
+
+function chooseDifficulty(e) {
+    e.target.classList.contains('difficulty')
+        ? ((chosenDifficulty = difficulties.find((el) => el.id === e.target.id)),
+        highlightChosenDifficulty(e))
+        : false;
+}
+
+function highlightChosenDifficulty(e) {
+    [...document.getElementsByClassName('difficulty')].forEach((el) =>
+        el.classList.remove('_active')
+    );
+    e.target.classList.add('_active');
+}
+
+document.querySelector('.difficulty-container').onclick = (e) => chooseDifficulty(e);
+
 // Create Deck
 
 function createDeck() {
