@@ -1,12 +1,6 @@
 import difficulties from './data/difficulties.mjs';
 import ancientsData from './data/ancients.mjs';
-import {
-    blueCards,
-    brownCards,
-    greenCards,
-} from './data/mythicCards/index.mjs';
-
-const allCards = [...blueCards, ...brownCards, ...greenCards];
+import { allCards } from './data/mythicCards/index.mjs';
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -58,10 +52,7 @@ let chosenDifficulty;
 
 function chooseDifficulty(e) {
     e.target.classList.contains('difficulty')
-        ? ((chosenDifficulty = difficulties.find(
-              (el) => el.id === e.target.id
-          )),
-          highlightChosenDifficulty(e))
+        ? ((chosenDifficulty = e.target.id), highlightChosenDifficulty(e))
         : false;
 }
 
@@ -75,21 +66,95 @@ function highlightChosenDifficulty(e) {
 document.querySelector('.difficulty-container').onclick = (e) =>
     chooseDifficulty(e);
 
-// Create Deck
-
-function createDeck() {
-    const blueCardsCopy = [...blueCards];
-    const brownCardsCopy = [...brownCards];
-    const greenCardsCopy = [...greenCards];
-
-    const allCardsCopy = [...allCards];
-    
+// Depending on chosen difficulty
+function getSourceCards(difficulty) {
     const totalCardsNeeded = Object.values(chosenAncient).reduce(
         (acc, el) => {
             return {
                 blueCards: acc.blueCards + (el.blueCards ? el.blueCards : 0),
-                brownCards: acc.brownCards + (el.brownCards ? el.brownCards : 0),
-                greenCards: acc.greenCards + (el.greenCards ? el.greenCards : 0),
+                brownCards:
+                    acc.brownCards + (el.brownCards ? el.brownCards : 0),
+                greenCards:
+                    acc.greenCards + (el.greenCards ? el.greenCards : 0),
+            };
+        },
+        {
+            blueCards: 0,
+            brownCards: 0,
+            greenCards: 0,
+        }
+    );
+    const sourceCards = [...allCards];
+
+    switch (difficulty) {
+        case 'super_easy':
+            const brownEasy = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'hard' && el.color === 'brown'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.brownCards);
+            const blueEasy = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'hard' && el.color === 'blue'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.blueCards);
+            const greenEasy = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'hard' && el.color === 'green'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.greenCards);
+            return [...brownEasy,...blueEasy,...greenEasy]
+        case 'easy':
+            return sourceCards.filter((el) => el.difficulty !== 'hard');
+        case 'hard':
+            return sourceCards.filter((el) => el.difficulty !== 'easy');
+        case 'super_hard':
+            const brownHard = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'easy' && el.color === 'brown'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.brownCards);
+            const blueHard = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'easy' && el.color === 'blue'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.blueCards);
+            const greenHard = shuffle(
+                sourceCards.filter(
+                    (el) => el.difficulty !== 'easy' && el.color === 'green'
+                )
+            )
+                .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
+                .splice(0, totalCardsNeeded.greenCards);
+            return [...brownHard,...blueHard,...greenHard]
+        default:
+            return sourceCards;
+    }
+}
+
+// Create Deck
+
+function createDeck() {
+    const allCardsCopy = getSourceCards(chosenDifficulty);
+
+    const totalCardsNeeded = Object.values(chosenAncient).reduce(
+        (acc, el) => {
+            return {
+                blueCards: acc.blueCards + (el.blueCards ? el.blueCards : 0),
+                brownCards:
+                    acc.brownCards + (el.brownCards ? el.brownCards : 0),
+                greenCards:
+                    acc.greenCards + (el.greenCards ? el.greenCards : 0),
             };
         },
         {
@@ -104,8 +169,14 @@ function createDeck() {
             totalCardsNeeded.blueCards,
             allCardsCopy.filter((el) => el.color === 'blue')
         ),
-        brownCards: getRandomCards(totalCardsNeeded.brownCards, brownCardsCopy),
-        greenCards: getRandomCards(totalCardsNeeded.greenCards, greenCardsCopy),
+        brownCards: getRandomCards(
+            totalCardsNeeded.brownCards,
+            allCardsCopy.filter((el) => el.color === 'brown')
+        ),
+        greenCards: getRandomCards(
+            totalCardsNeeded.greenCards,
+            allCardsCopy.filter((el) => el.color === 'green')
+        ),
     };
 
     const firstStageCards = shuffle([
