@@ -1,0 +1,1 @@
+import m from"./brown/index.mjs";import o from"./blue/index.mjs";import r from"./green/index.mjs";const e=[...o,...m,...r];export{e as allCards};
