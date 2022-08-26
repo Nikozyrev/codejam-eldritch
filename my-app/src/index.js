@@ -109,7 +109,7 @@ function getSourceCards(difficulty) {
             )
                 .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
                 .splice(0, totalCardsNeeded.greenCards);
-            return [...brownEasy,...blueEasy,...greenEasy]
+            return [...brownEasy, ...blueEasy, ...greenEasy];
         case 'easy':
             return sourceCards.filter((el) => el.difficulty !== 'hard');
         case 'hard':
@@ -136,7 +136,7 @@ function getSourceCards(difficulty) {
             )
                 .sort((a, b) => (a.difficulty > b.difficulty ? 1 : -1))
                 .splice(0, totalCardsNeeded.greenCards);
-            return [...brownHard,...blueHard,...greenHard]
+            return [...brownHard, ...blueHard, ...greenHard];
         default:
             return sourceCards;
     }
@@ -246,9 +246,9 @@ document.getElementById('create_deck_btn').onclick = () => {
 
 // Draw card
 const deckDiv = document.querySelector('.deck');
+const currentCardDiv = document.querySelector('.current_card');
 
-function drawCard() {
-    const currentCardDiv = document.querySelector('.current_card');
+function drawCard() {    
     const currentCard = deck.shift();
     updateStatus();
     deck.length === 0 ? (deckDiv.style.backgroundImage = 'none') : false;
@@ -305,3 +305,31 @@ function updateStatus() {
         blueDots[i].textContent = totalCount[i].blueCards;
     }
 }
+
+// UX
+function showElements(e) {
+    if (e.target.classList.contains('ancient_card')) {
+        document.querySelector('.ancients_container').classList.add('_active');
+        document
+            .querySelector('.difficulty-container')
+            .classList.add('_active');
+        document.getElementById('create_deck_btn').classList.add('_active');
+    }
+    if (
+        document.querySelector('.deck_container').classList.contains('_active') && (
+            e.target.classList.contains('ancient_card') ||
+                e.target.classList.contains('difficulty')
+        )
+    ) {
+        document.querySelector('.deck_container').classList.remove('_active');
+        document.getElementById('create_deck_btn').classList.add('_active');
+        deckDiv.style.backgroundImage = 'url(./assets/mythicCardBackground.png)';
+        currentCardDiv.style.backgroundImage = `none`;
+    }
+    if (e.target.classList.contains('create_deck')) {
+        document.querySelector('.deck_container').classList.add('_active');
+        document.getElementById('create_deck_btn').classList.remove('_active');
+    }
+}
+
+window.onclick = (e) => showElements(e);

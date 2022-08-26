@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Eldritch Horror - Codejam</title>
 </head>
 <body>
@@ -19,12 +19,12 @@
         <ul class="difficulty-container">
             <li class="difficulty _button" id="super_easy">Super easy</li>
             <li class="difficulty _button" id="easy">Easy</li>
-            <li class="difficulty _button" id="normal">Normal</li>
+            <li class="difficulty _button _active" id="normal">Normal</li>
             <li class="difficulty _button" id="hard">Hard</li>
             <li class="difficulty _button" id="super_hard">Super hard</li>
         </ul>
+        <button class="create_deck _button" id="create_deck_btn">Create Deck</button>
         <div class="deck_container">
-            <button class="_button" id="create_deck_btn">Create Deck</button>
             <div class="current-state">
                 <div class="stage-container">
                     <span class="stage-text">First stage</span>
@@ -51,8 +51,10 @@
                     </div>
                 </div>
             </div>
-            <div class="deck card"></div>
-            <div class="current_card card"></div>
+            <div class="cards">
+                <div class="deck card"></div>
+                <div class="current_card card"></div>
+            </div>
         </div>
     </div>
 </body>
