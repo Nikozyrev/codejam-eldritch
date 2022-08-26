@@ -2,7 +2,8 @@
 .wrapper {
     min-height: 100vh;
     display: flex;
-    justify-content: space-between;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
     background-image: url(../assets/home.png);
     background-size: cover;
     background-position: center;
@@ -11,27 +12,58 @@
     color: white;
 }
 
+._button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 50px;
+    background-color: rgba(128, 0, 128, 0.558);
+    border-radius: 15px;
+    border: solid 1px red;
+    color: white;
+    cursor: pointer;
+}
+
 /* ---Ancients--- */
 
 .ancients_container {
-    max-width: 50%;
+    /* max-width: 50%; */
+    width: 100%;
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
     gap: 15px;
 }
 
+.ancients_container._active {
+    width: 35%;
+    align-self: flex-start;
+    /* transform: scale(0.7); */
+    /* transition: 2s ease-out; */
+}
+
+.ancients_container._active .ancient_card {
+    /* transform: scale(0.8); */
+    /* transition: 0.5s ease-out; */
+    width: 200px;
+    height: 259px;
+}
+
 .ancient_card {
-    width: 270px;
-    height: 350px;
+    /* width: 19%; */
+    width: 300px;
+    height: 389px;
     border-radius: 25px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .ancient_card._active {
-    border: solid 2px red;
+    border: solid 3px red;
 }
 
 .ancient_card:hover {
@@ -55,6 +87,15 @@
 }
 /* ------Difficulty------ */
 
+.difficulty-container {
+    margin: 10%;
+    display: none;
+}
+
+.difficulty-container._active {
+    display: block;
+}
+
 .difficulty {
     margin-top: 15px;
 }
@@ -65,20 +106,25 @@
 
 /* -------Deck------- */
 
-._button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 50px;
-    background-color: rgba(128, 0, 128, 0.558);
-    border-radius: 15px;
-    border: solid 1px red;
-    color: white;
-    cursor: pointer;
+.create_deck {
+    align-self: center;
+    display: none;
+}
+
+.create_deck._active {
+    display: block;
+}
+
+.deck_container {
+    display: none;
+}
+
+.deck_container._active {
+    display: block;
 }
 
 .current-state {
+    max-width: 200px;
     text-align: center;
 }
 
@@ -87,6 +133,7 @@
 }
 
 .dots-container {
+    margin: 10px 0px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -114,12 +161,18 @@
     background-color: blue;
 }
 
+.cards {
+    margin-top: 30px;
+    display: flex;
+}
+
 .card {
     width: 200px;
     height: 300px;
     background-size: 200px 300px;
     border-radius: 25px;
     border: solid 3px rgba(43, 34, 34, 0.533);
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .deck {
@@ -128,5 +181,5 @@
 }
 
 .current_card {
-    margin-top: 30px;
+    margin-left: 30px;
 }
