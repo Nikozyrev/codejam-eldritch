@@ -248,12 +248,16 @@ document.getElementById('create_deck_btn').onclick = () => {
 const deckDiv = document.querySelector('.deck');
 const currentCardDiv = document.querySelector('.current_card');
 
-function drawCard() {    
+function drawCard() {
     const currentCard = deck.shift();
     updateStatus();
-    deck.length === 0 ? (deckDiv.style.backgroundImage = 'none') : false;
+    deck.length === 0
+        ? ((deckDiv.style.backgroundImage = 'none'),
+          deckDiv.classList.remove('card'))
+        : false;
     currentCard
-        ? (currentCardDiv.style.backgroundImage = `url(${currentCard.cardFace})`)
+        ? ((currentCardDiv.style.backgroundImage = `url(${currentCard.cardFace})`),
+          currentCardDiv.classList.add('card'))
         : false;
 }
 
@@ -316,15 +320,19 @@ function showElements(e) {
         document.getElementById('create_deck_btn').classList.add('_active');
     }
     if (
-        document.querySelector('.deck_container').classList.contains('_active') && (
-            e.target.classList.contains('ancient_card') ||
-                e.target.classList.contains('difficulty')
-        )
+        document
+            .querySelector('.deck_container')
+            .classList.contains('_active') &&
+        (e.target.classList.contains('ancient_card') ||
+            e.target.classList.contains('difficulty'))
     ) {
         document.querySelector('.deck_container').classList.remove('_active');
         document.getElementById('create_deck_btn').classList.add('_active');
-        deckDiv.style.backgroundImage = 'url(./assets/mythicCardBackground.png)';
+        deckDiv.style.backgroundImage =
+            'url(./assets/mythicCardBackground.png)';
         currentCardDiv.style.backgroundImage = `none`;
+        currentCardDiv.classList.remove('card');
+        deckDiv.classList.add('card');
     }
     if (e.target.classList.contains('create_deck')) {
         document.querySelector('.deck_container').classList.add('_active');

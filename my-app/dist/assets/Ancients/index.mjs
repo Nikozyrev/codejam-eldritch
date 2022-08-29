@@ -1,1 +1,0 @@
-import t from"./Azathoth.png";import o from"./Cthulthu.png";import h from"./IogSothoth.png";import r from"./ShubNiggurath.png";const g={azathoth:t,cthulhu:o,iogSothoth:h,shubNiggurath:r};export default g;
